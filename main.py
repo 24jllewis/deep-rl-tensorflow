@@ -124,8 +124,7 @@ def main(_):
 
   with tf.Session(config=sess_config) as sess:
     merged_summary = tf.summary.merge_all()
-    file_writer = tf.summary.FileWriter("tensorboardLogs1")
-    file_writer.add_graph(sess.graph)
+    file_writer = tf.summary.FileWriter("tensorboardLogs1", sess.graph)
     if any(name in conf.env_name for name in ['Corridor', 'FrozenLake']) :
       env = ToyEnvironment(conf.env_name, conf.n_action_repeat,
                            conf.max_random_start, conf.observation_dims,
