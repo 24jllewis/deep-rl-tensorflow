@@ -87,10 +87,8 @@ class Agent(object):
 
       logger.debug("a: %d, r: %d, t: %d, q: %.4f, l: %.2f" % \
           (action, reward, terminal, np.mean(q), loss))
-
-      with file_writer.as_default():
-        a = tf.summary.scalar('action', action)
-        b = tf.summary.scalar('reward', reward)
+      a = tf.summary.scalar('action', action)
+      b = tf.summary.scalar('reward', reward)
 
       file_writer.add_summary(a, self.t)
       file_writer.add_summary(b, self.t)
