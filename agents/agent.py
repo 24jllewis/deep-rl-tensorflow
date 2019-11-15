@@ -59,7 +59,6 @@ class Agent(object):
       self.new_game = self.env.new_game
 
   def train(self, t_max):
-    file_writer = tf.summary.FileWriter("~/logs", self.sess.graph)
     tf.global_variables_initializer().run()
 
     self.stat.load_model()
