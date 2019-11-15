@@ -176,7 +176,8 @@ def main(_):
     else:
       agent.play(conf.ep_end)
 
-
+    merged_summary = tf.summary.merge_all()
+    file_writer = tf.summary.FileWriter("tensorboardLogs", sess.graph)
 
 if __name__ == '__main__':
   tf.app.run()
