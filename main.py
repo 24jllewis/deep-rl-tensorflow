@@ -123,6 +123,9 @@ def main(_):
   sess_config.gpu_options.allow_growth = conf.allow_soft_placement
 
   with tf.Session(config=sess_config) as sess:
+    merged_summary = tf.summary.merge_all()
+    file_writer = tf.summary.FileWriter("tensorboardLogs")
+    file_writer.add_graph(sess.graph)
     if any(name in conf.env_name for name in ['Corridor', 'FrozenLake']) :
       env = ToyEnvironment(conf.env_name, conf.n_action_repeat,
                            conf.max_random_start, conf.observation_dims,
@@ -169,8 +172,6 @@ def main(_):
 
     stat = Statistic(sess, conf.t_test, conf.t_learn_start, model_dir, pred_network.var.values())
     agent = TrainAgent(sess, pred_network, env, stat, conf, target_network=target_network)
-
-    file_writer = tf.summary.FileWriter("tensorboardLogs", sess.graph)
 
     if conf.is_train:
       agent.train(conf.t_train_max)
