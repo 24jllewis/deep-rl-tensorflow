@@ -170,12 +170,14 @@ def main(_):
     stat = Statistic(sess, conf.t_test, conf.t_learn_start, model_dir, pred_network.var.values())
     agent = TrainAgent(sess, pred_network, env, stat, conf, target_network=target_network)
 
+    file_writer = tf.summary.FileWriter("tensorboardLogs", sess.graph)
+
     if conf.is_train:
       agent.train(conf.t_train_max)
     else:
       agent.play(conf.ep_end)
 
-    file_writer = tf.summary.FileWriter("tensorboardLogs", sess.graph)
+
 
 if __name__ == '__main__':
   tf.app.run()
