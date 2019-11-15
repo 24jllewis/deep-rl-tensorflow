@@ -71,7 +71,8 @@ class Agent(object):
       self.history.add(observation)
 
     merged_summary = tf.summary.merge_all()
-    file_writer = tf.summary.FileWriter("tensorboardLogs", self.sess.graph)
+    file_writer = tf.summary.create_file_writer("tensorboardLogs")
+    tf.summary.graph(self.sess.graph)
 
     for self.t in tqdm(range(start_t, t_max), ncols=70, initial=start_t):
       ep = (self.ep_end +
@@ -88,8 +89,9 @@ class Agent(object):
       logger.debug("a: %d, r: %d, t: %d, q: %.4f, l: %.2f" % \
           (action, reward, terminal, np.mean(q), loss))
 
-      tf.summary.scalar('action', action)
-      tf.summary.scalar('reward', reward)
+      with file_writer.as_default():
+        tf.summary.scalar('action', action)
+        tf.summary.scalar('reward', reward)
 
       if self.stat:
         self.stat.on_step(self.t, action, reward, terminal,
