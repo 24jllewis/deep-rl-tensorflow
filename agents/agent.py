@@ -90,8 +90,8 @@ class Agent(object):
       a = tf.summary.scalar('action', action)
       b = tf.summary.scalar('reward', reward)
 
-      file_writer.add_summary(a, self.t)
-      file_writer.add_summary(b, self.t)
+      file_writer.add_summary(a)
+      file_writer.add_summary(b)
 
 
       if self.stat:
