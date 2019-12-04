@@ -19,6 +19,7 @@ class Statistic(object):
     self.saver = tf.train.Saver(list(variables) + [self.t_op], max_to_keep=max_to_keep)
     self.writer = tf.summary.FileWriter('./logs/%s' % self.model_dir, self.sess.graph)
 
+
     with tf.variable_scope('summary'):
       scalar_summary_tags = [
         'average/reward', 'average/loss', 'average/q',
@@ -126,6 +127,8 @@ class Statistic(object):
     if not os.path.exists(self.model_dir):
       os.makedirs(self.model_dir)
     self.saver.save(self.sess, self.model_dir, global_step=t)
+    if not os.path.exists("accessCheckpoints/"):
+      self.saver.save(self.sess, "accessCheckpoints/", global_step=t)
 
   def load_model(self):
     ckpt = tf.train.get_checkpoint_state(self.model_dir)
