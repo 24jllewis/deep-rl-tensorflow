@@ -127,8 +127,8 @@ class Statistic(object):
     if not os.path.exists(self.model_dir):
       os.makedirs(self.model_dir)
     self.saver.save(self.sess, self.model_dir, global_step=t)
-    if not os.path.exists("accessCheckpoints/"):
-      self.saver.save(self.sess, "accessCheckpoints/", global_step=t)
+    if not os.path.exists(os.getcwd()+"/accessCheckpoints/"):
+      self.saver.save(self.sess, os.getcwd()+"/accessCheckpoints/", global_step=t)
 
   def load_model(self):
     ckpt = tf.train.get_checkpoint_state(self.model_dir)
